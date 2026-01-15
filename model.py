@@ -1,4 +1,4 @@
-#time: 2026-1-15 15:57
+#time 2026-1-15
 from torch import nn
 import torch
 import torchvision

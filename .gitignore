@@ -19,6 +19,7 @@ ENV/
 
 # VS Code
 .vscode/
+.vscode/*.json
 
 # OS
 .DS_Store
