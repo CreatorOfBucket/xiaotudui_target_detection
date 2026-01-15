@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Data and outputs
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.weights
+*.pb
+*.tflite
+runs/
+outputs/
+results/
+checkpoints/
+
+# Datasets (uncomment if you keep datasets locally)
+# data/
+# datasets/
