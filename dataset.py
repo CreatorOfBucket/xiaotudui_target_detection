@@ -29,21 +29,22 @@ class mydata(Dataset):
             label_content = f.read()
         label_dict = xmltodict.parse(label_content)
         objects = label_dict['annotation']['object']
+        # 确保 objects 是列表（单个对象时 xmltodict 返回 dict）
+        if isinstance(objects, dict):
+            objects = [objects]
         targets = []
-        num_classes = len(self.classes)
         for obj in objects:
             name = obj['name']
             id_ = self.classes.index(name)
             bndbox = obj['bndbox']
-            xmin = float(bndbox['xmin']) / orig_w  # 归一化到 [0, 1]
+            xmin = float(bndbox['xmin']) / orig_w
             ymin = float(bndbox['ymin']) / orig_h
             xmax = float(bndbox['xmax']) / orig_w
             ymax = float(bndbox['ymax']) / orig_h
-            target_vec = torch.zeros(4 + num_classes, dtype=torch.float32)
-            target_vec[0:4] = torch.tensor([xmin, ymin, xmax, ymax], dtype=torch.float32)
-            target_vec[4 + id_] = 1.0
+            # 简化：5维向量 [xmin, ymin, xmax, ymax, class_id]
+            target_vec = torch.tensor([xmin, ymin, xmax, ymax, id_], dtype=torch.float32)
             targets.append(target_vec)
-        targets = torch.stack(targets) if targets else torch.zeros((0, 4 + num_classes), dtype=torch.float32)
+        targets = torch.stack(targets) if targets else torch.zeros((0, 5), dtype=torch.float32)
         if self.transform:
             img = self.transform(img)
 

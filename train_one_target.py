@@ -35,13 +35,11 @@ def collate_fn(batch):
     for img, t in batch:
         if t.numel() == 0:
             continue
-        # 找出属于目标类别的目标（one-hot 位置为 4 + TARGET_CLASS_ID）
-        mask = t[:, 4 + TARGET_CLASS_ID] == 1.0
+        # 类别索引在第5列（index=4）
+        mask = t[:, 4] == TARGET_CLASS_ID
         filtered = t[mask]
-        # 空检查，防止没有该类别的目标
         if filtered.numel() == 0:
             continue
-        # 只取第一个匹配的目标
         images.append(img)
         targets.append(filtered[0])
     
